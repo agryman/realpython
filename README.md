@@ -1,2 +1,3 @@
 # realpython
-Course material from real python.com
+
+Course materials from [realpython.com](https://realpython.com).
