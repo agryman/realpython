@@ -5,6 +5,7 @@
 from pathlib import Path
 
 from pypdf import PdfReader, PdfWriter
+from pypdf.errors import FileNotDecryptedError
 
 pdf_path = (
     Path.home()
@@ -40,8 +41,12 @@ pdf_path = Path.home() / "newsletter_protected.pdf"
 
 pdf_reader = PdfReader(pdf_path)
 
-print(pdf_reader.pages[0])  # Raises FileNotDecryptedError
+try:
+    print(pdf_reader.pages[0])  # Raises FileNotDecryptedError
+except FileNotDecryptedError as err:
+    print(f"An exception occurred: {err}")
 
-print(pdf_reader.decrypt(password="SuperSecret"))
+password_type = pdf_reader.decrypt(password="SuperSecret")
+print(password_type)
 
 print(pdf_reader.pages[0])
